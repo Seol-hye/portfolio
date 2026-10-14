@@ -1166,19 +1166,6 @@ html {
   text-decoration: underline;
 }
 
-/* GitHub 항목을 마지막 줄 전체 너비로 표시 */
-
-.home-about-info>div:last-child {
-  grid-column: 1 / -1;
-}
-
-/* 모바일에서는 기존 1열 구조 유지 */
-
-@media (max-width: 600px) {
-  .home-about-info>div:last-child {
-    grid-column: auto;
-  }
-}
 
 
 /* 프로젝트 스크린샷 */
@@ -1248,5 +1235,82 @@ html {
   .screenshot-grid {
     grid-template-columns: 1fr;
     gap: 22px;
+  }
+}
+
+/* 개인정보 3개를 균형 있게 정렬 */
+.home-about-info {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 0;
+  gap: 16px;
+}
+.home-about-info > div,
+.home-about-info > div:last-child {
+  grid-column: auto;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 24px;
+  background: #fff;
+}
+.home-about-info strong { overflow-wrap: anywhere; }
+@media (max-width: 900px) {
+  .home-about-info { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .home-about-info > div:last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 600px) {
+  .home-about-info { grid-template-columns: 1fr; }
+  .home-about-info > div:last-child { grid-column: auto; }
+}
+
+/* 중앙 정렬된 간결한 인사말 히어로 */
+.hero.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 440px;
+  padding-block: 100px 95px;
+  gap: 0;
+}
+.hero .hero-copy { width: 100%; max-width: 800px; margin-inline: auto; }
+.hero .eyebrow { justify-content: center; }
+.hero.hero h1 { margin-bottom: 24px; }
+.hero .hero-summary { margin-inline: auto; margin-bottom: 0; }
+@media (max-width: 720px) {
+  .hero.hero { min-height: 340px; padding-block: 75px 65px; }
+}
+
+
+/* 첫 화면 인사말: 위에서 아래 순차적으로 부드럽게 등장 */
+@keyframes heroEnter {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-entrance {
+  animation: heroEnter 650ms cubic-bezier(.22, 1, .36, 1) both;
+}
+.hero-entrance-1 { animation-delay: 80ms; }
+.hero-entrance-2 { animation-delay: 220ms; }
+.hero-entrance-3 { animation-delay: 390ms; }
+
+/* 스크롤 시 프로젝트/기술스택/개인정보 등장: 한 번만 실행 */
+.scroll-reveal-ready {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 650ms ease, transform 650ms cubic-bezier(.22, 1, .36, 1);
+}
+.scroll-reveal-ready.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-entrance { animation: none; }
+  .scroll-reveal-ready, .scroll-reveal-ready.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }

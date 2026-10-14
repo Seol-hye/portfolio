@@ -1,7 +1,7 @@
 import { Menu, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
-const navigation = [['홈', '/#home'], ['소개', '/#about'], ['기술', '/#skills'], ['프로젝트', '/#projects']];
+const navigation = [['인사말', '/#home'], ['프로젝트', '/#projects'], ['기술스택', '/#skills'], ['개인정보', '/#about']];
 export default function Header() {
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();

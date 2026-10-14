@@ -66,7 +66,7 @@ export const projects = [
     ],
 
     videoUrl:
-      'https://www.youtube-nocookie.com/embed/cjExe6qPvxE',
+      'https://www.youtube-nocookie.com/embed/CqEBdIDPjlA',
 
 
     githubUrl: 'https://github.com/Seol-hye/provit',
