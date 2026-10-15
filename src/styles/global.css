@@ -548,25 +548,18 @@ p {
 
 .skills-layout {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  border-top: 1px solid var(--line)
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px
 }
 
 .skill-section {
-  padding: 33px 0;
-  border-bottom: 1px solid var(--line);
+  min-height: 142px;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
   display: grid;
   grid-template-columns: 130px 1fr;
   gap: 15px
-}
-
-.skill-section:nth-child(odd) {
-  padding-right: 45px
-}
-
-.skill-section:nth-child(even) {
-  padding-left: 45px;
-  border-left: 1px solid var(--line)
 }
 
 .skill-section h3 {
@@ -910,8 +903,8 @@ p {
   .skill-section:nth-child(odd),
   .skill-section:nth-child(even) {
     grid-template-columns: 1fr;
-    padding: 26px 0;
-    border-left: 0
+    min-height: 0;
+    padding: 24px
   }
 
   .detail {
@@ -1186,22 +1179,27 @@ html {
   margin: 0;
 }
 
-.screenshot-item a {
+.screenshot-trigger {
   display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  padding: 0;
   overflow: hidden;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
   background: #f8fafc;
+  cursor: zoom-in;
 }
 
 .screenshot-item img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: contain;
   transition: transform 0.3s ease;
 }
 
-.screenshot-item a:hover img {
+.screenshot-trigger:hover img {
   transform: scale(1.025);
 }
 
@@ -1235,6 +1233,122 @@ html {
   .screenshot-grid {
     grid-template-columns: 1fr;
     gap: 22px;
+  }
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+.screenshot-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgb(15 23 42 / 0.82);
+}
+
+.screenshot-modal {
+  position: relative;
+  display: grid;
+  width: min(960px, calc(100vw - 144px));
+  max-height: calc(100vh - 48px);
+}
+
+.screenshot-modal-image {
+  display: block;
+  width: 100%;
+  height: min(62vh, 600px);
+  margin: auto;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.screenshot-modal-close,
+.screenshot-modal-nav {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  color: #fff;
+  background: transparent;
+  cursor: pointer;
+  filter: drop-shadow(0 1px 3px rgb(15 23 42 / 0.9));
+}
+
+.screenshot-modal-close {
+  top: -52px;
+  right: 0;
+}
+
+.screenshot-modal-nav {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.screenshot-modal-prev {
+  left: -56px;
+}
+
+.screenshot-modal-next {
+  right: -56px;
+}
+
+.screenshot-modal-close:hover,
+.screenshot-modal-nav:hover {
+  color: #bfdbfe;
+}
+
+.screenshot-modal-close:focus-visible,
+.screenshot-modal-nav:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.screenshot-modal-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 4px 0;
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .screenshot-modal-backdrop {
+    padding: 12px;
+  }
+
+  .screenshot-modal {
+    width: 100%;
+  }
+
+  .screenshot-modal-image {
+    height: min(62vh, 560px);
+  }
+
+  .screenshot-modal-close,
+  .screenshot-modal-nav {
+    width: 40px;
+    height: 40px;
+  }
+
+  .screenshot-modal-prev {
+    left: 4px;
+  }
+
+  .screenshot-modal-next {
+    right: 4px;
+  }
+
+  .screenshot-modal-close {
+    top: 4px;
+    right: 4px;
   }
 }
 
@@ -1312,5 +1426,69 @@ html {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+}
+
+
+/* 기술 스택 카드 */
+.skill-section {
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr);
+  align-items: start;
+  gap: 16px;
+
+  padding: 28px;
+  border: 1px solid #e4e7eb;
+  border-radius: 10px;
+  background: #fff;
+}
+
+/* 기술 스택 카테고리 */
+.skill-section h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* 기술 태그 정렬 */
+.skill-section .skill-items {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: 8px;
+  min-width: 0;
+}
+
+/* 개별 기술 태그 */
+.skill-section .skill-items .skill-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: auto;
+  height: 38px;
+  padding: 0 13px;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  white-space: nowrap;
+
+  background: #f6f8fa;
+  border: 1px solid #e9edf1;
+  border-radius: 5px;
+
+  flex: 0 0 auto;
+  align-self: flex-start;
+}
+
+/* 모바일 */
+@media (max-width: 600px) {
+  .skill-section {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 22px;
   }
 }

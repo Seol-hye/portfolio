@@ -3,7 +3,7 @@ export const projects = [
   {
     slug: 'provit',
     name: 'Provit',
-    period: '2026.09 — 2026.10',
+    period: '2026.09.14 — 2026.10.08',
     tagline: 'AI와 채용 정보를 연결한 통합 취업 지원 플랫폼',
     description:
       '이력서·포트폴리오와 채용공고 정보를 연결해 개인화된 AI 모의 면접과 취업 준비 과정을 지원하는 웹 플랫폼입니다.',
@@ -80,7 +80,7 @@ export const projects = [
   {
     slug: '5asis',
     name: '5ASIS',
-    period: '2026.08 — 2026.09',
+    period: '2026.08.20 — 2026.09.08',
     tagline: '게임 유저의 정보 공유와 파티 모집을 위한 커뮤니티',
     description:
       '게임 인원 모집을 중심으로 회원·게시글·댓글 기능을 데이터베이스와 연동한 커뮤니티형 웹 애플리케이션입니다.',
@@ -148,7 +148,7 @@ export const projects = [
   {
     slug: 'essage',
     name: 'Essage',
-    period: '2026.06 — 2026.07',
+    period: '2026.06.19 — 2026.07.03',
     tagline: '팀의 소통과 정보 공유를 돕는 React 협업 애플리케이션',
     description:
       '팀원 간 소통과 정보·일정 공유를 목적으로 개발한 React 기반 커뮤니티형 웹 애플리케이션입니다.',

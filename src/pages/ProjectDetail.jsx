@@ -1,11 +1,16 @@
 
 
+import { useEffect, useState } from 'react';
+
 import {
     ArrowLeft,
     ArrowRight,
     BookOpen,
+    ChevronLeft,
+    ChevronRight,
     ExternalLink,
     GitFork,
+    X,
 } from 'lucide-react';
 
 
@@ -40,6 +45,39 @@ function InfoList({ title, items }) {
 // 프로젝트 스크린샷 출력
 function ProjectScreenshots({ project }) {
     const screenshots = project.screenshots || [];
+    const [selectedIndex, setSelectedIndex] = useState(null);
+
+    const closeModal = () => setSelectedIndex(null);
+    const showPrevious = () => {
+        setSelectedIndex((index) =>
+            index === 0 ? screenshots.length - 1 : index - 1
+        );
+    };
+    const showNext = () => {
+        setSelectedIndex((index) =>
+            index === screenshots.length - 1 ? 0 : index + 1
+        );
+    };
+
+    useEffect(() => {
+        if (selectedIndex === null) {
+            return undefined;
+        }
+
+        const handleKeyDown = (event) => {
+            if (event.key === 'Escape') closeModal();
+            if (event.key === 'ArrowLeft') showPrevious();
+            if (event.key === 'ArrowRight') showNext();
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+        document.body.classList.add('modal-open');
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+            document.body.classList.remove('modal-open');
+        };
+    }, [selectedIndex, screenshots.length]);
 
     // 스크린샷이 없으면 영역 자체를 표시하지 않음
     if (screenshots.length === 0) {
@@ -61,18 +99,18 @@ function ProjectScreenshots({ project }) {
                             className="screenshot-item"
                             key={image.src}
                         >
-                            <a
-                                href={imageUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label={`${image.title} 원본 이미지 보기`}
+                            <button
+                                className="screenshot-trigger"
+                                type="button"
+                                onClick={() => setSelectedIndex(index)}
+                                aria-label={`${image.title} 크게 보기`}
                             >
                                 <img
                                     src={imageUrl}
                                     alt={`${project.name} - ${image.title}`}
                                     loading="lazy"
                                 />
-                            </a>
+                            </button>
 
                             <figcaption>
                                 <span className="screenshot-number">
@@ -90,6 +128,64 @@ function ProjectScreenshots({ project }) {
                     );
                 })}
             </div>
+
+            {selectedIndex !== null && (
+                <div
+                    className="screenshot-modal-backdrop"
+                    role="presentation"
+                    onClick={closeModal}
+                >
+                    <div
+                        className="screenshot-modal"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="screenshot-modal-title"
+                        onClick={(event) => event.stopPropagation()}
+                    >
+                        <button
+                            className="screenshot-modal-close"
+                            type="button"
+                            onClick={closeModal}
+                            aria-label="스크린샷 닫기"
+                        >
+                            <X size={24} />
+                        </button>
+
+                        <button
+                            className="screenshot-modal-nav screenshot-modal-prev"
+                            type="button"
+                            onClick={showPrevious}
+                            aria-label="이전 스크린샷"
+                        >
+                            <ChevronLeft size={30} />
+                        </button>
+
+                        <img
+                            className="screenshot-modal-image"
+                            src={`${import.meta.env.BASE_URL}${screenshots[selectedIndex].src.replace(/^\/+/, '')}`}
+                            alt={`${project.name} - ${screenshots[selectedIndex].title}`}
+                        />
+
+                        <button
+                            className="screenshot-modal-nav screenshot-modal-next"
+                            type="button"
+                            onClick={showNext}
+                            aria-label="다음 스크린샷"
+                        >
+                            <ChevronRight size={30} />
+                        </button>
+
+                        <div className="screenshot-modal-caption">
+                            <strong id="screenshot-modal-title">
+                                {screenshots[selectedIndex].title}
+                            </strong>
+                            <span>
+                                {selectedIndex + 1} / {screenshots.length}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            )}
         </section>
     );
 }
@@ -169,7 +265,7 @@ export default function ProjectDetail() {
 
                 {/* 내가 담당한 기능 */}
                 <InfoList
-                    title="내가 직접 담당한 기능"
+                    title="핵심 담당 기능"
                     items={project.responsibilities}
                 />
 

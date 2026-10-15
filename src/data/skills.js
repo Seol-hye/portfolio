@@ -3,11 +3,9 @@ export const skillGroups = [
   {
     category: 'Language',
     items: [
-      'JavaScript',
       'Java',
-      'HTML5',
-      'CSS3',
-      'XML',
+      'JavaScript',
+      'SQL',
     ],
   },
   {
@@ -17,7 +15,8 @@ export const skillGroups = [
       'React Router',
       'Zustand',
       'Vite',
-      'JSP',
+      'HTML5',
+      'CSS3',
       'Bootstrap',
     ],
   },
@@ -26,12 +25,13 @@ export const skillGroups = [
     items: [
       'Spring MVC',
       'MyBatis',
-      'Oracle Database',
-      'SQL',
+      'JSP',
+      'Oracle DB',
+      'XML',
     ],
   },
   {
-    category: 'Tools & Mobile',
+    category: 'Tools & Environment',
     items: [
       'Git',
       'GitHub',

@@ -52,7 +52,7 @@ export default function Home() {
           <h1 className="hero-entrance hero-entrance-2">
             안녕하세요.
             <br />
-            신입 웹 개발자{' '}
+            웹 개발자{' '}
             <span className="hero-name">
               {profile.name}
             </span>
@@ -68,6 +68,41 @@ export default function Home() {
             쌓고 있습니다.
           </p>
 
+        </div>
+      </section>
+
+      <section
+        id="about"
+        className="section onepage-section"
+        data-scroll-reveal
+      >
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">ABOUT ME</p>
+            <h2>개인정보</h2>
+          </div>
+        </div>
+
+        <div className="home-about-info">
+          {info.filter(([, value]) => value).map(([label, value]) => (
+            <div key={label}>
+              <span>{label}</span>
+
+              <strong>
+                {label === 'GitHub' && value ? (
+                  <a
+                    href={value}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="profile-link"
+                  >
+                    {value.replace(/^https?:\/\//, '')}
+                    <ExternalLink size={15} />
+                  </a>
+                ) : value}
+              </strong>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -130,7 +165,7 @@ export default function Home() {
 
 
       {/* ABOUT ME */}
-      <section
+      {false && (<section
         id="about"
         className="section onepage-section"
         data-scroll-reveal
@@ -163,7 +198,7 @@ export default function Home() {
             </div>
           ))}
         </div>
-      </section>
+      </section>)}
 
 
     </main>
